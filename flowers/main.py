@@ -12,12 +12,12 @@ data = {'1':{'flower_name':'Rose','flower_color':'Red'},
 def flower_home_page():
     html = '''<h1>Welcome to Flowers app!!</h1>
               <h2>Use the following endpoints :-</h2>
-                    <h2>1. /insert_flower - to insert a new flower.</h2>
-                    <h2>2. /retrieve_all_flowers - to retrieve all flower database.</h2>
-                    <h2>3. /retrieve_color_flowers/{flower_color} - to retrieve a certain colored flower.</h2>
-                    <h2>4. /modify_flowers/flower_name/flower_color - to update a color of an existing flower.</h2>
-                    <h2>5. /delete_color_flowers/{flower_color} - to delete a flower with a certain color.</h2>
-                    <h2>6. /delete_flowers/{flower_color}/{flower_name} - to delete a flower with a certain color and name.</h2>
+                    <h2>1. /insert_flower (POST) - to insert a new flower.</h2>
+                    <h2>2. /retrieve_all_flowers (GET) - to retrieve all flower database.</h2>
+                    <h2>3. /retrieve_color_flowers/{flower_color} (GET) - to retrieve a certain colored flower.</h2>
+                    <h2>4. /modify_flowers/flower_name/flower_color (PUT) - to update a color of an existing flower.</h2>
+                    <h2>5. /delete_color_flowers/{flower_color} (DELETE) - to delete a flower with a certain color.</h2>
+                    <h2>6. /delete_flowers/{flower_color}/{flower_name} (DELETE) - to delete a flower with a certain color and name.</h2>
                 
     '''         
     return render_template_string(html)

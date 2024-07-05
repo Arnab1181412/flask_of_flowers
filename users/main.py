@@ -8,11 +8,11 @@ user_data = {'1':{'name':'Arnab Samanta','profession':'Data Scientist','company'
 def user_home_page():
     html = '''<h1>Welcome to Users app!!</h1>
               <h2>Use the following endpoints :-</h2>
-                    <h2>1. /insert - to insert a new user.</h2>
-                    <h2>2. /retrieve_all - to retrieve all user database.</h2>
-                    <h2>3. /retrieve/{user_id} - to retrieve a certain user_id.</h2>
-                    <h2>4. /update - to update a user_id.</h2>
-                    <h2>5. /delete/{user_id} - to delete a user_id.</h2>
+                    <h2>1. /insert (POST) - to insert a new user.</h2>
+                    <h2>2. /retrieve_all (GET) - to retrieve all user database.</h2>
+                    <h2>3. /retrieve/{user_id} (GET) - to retrieve a certain user_id.</h2>
+                    <h2>4. /update (POST) - to update a user_id.</h2>
+                    <h2>5. /delete/{user_id} (DELETE) - to delete a user_id.</h2>
                 
     '''         
     return render_template_string(html)
