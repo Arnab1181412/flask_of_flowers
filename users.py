@@ -1,39 +1,40 @@
 from flask import Flask, request, jsonify, Blueprint
-from data import insert,delete,retrieve,update
+from data import CustomTable
 
 users_bp = Blueprint('users',__name__)
 
        
 @users_bp.route('/insert_user',methods=['POST'])
 def new_user():
-
+    users_table = CustomTable('users')
     payload = dict(request.json)
-    record = insert('users',payload)
+    record = users_table.insert(**payload)
     return record
 
 @users_bp.route('/retrieve_all_users',methods=['GET'])
 def retrieve_all_users():
-    return jsonify(retrieve('users',all_=True))
+    users_table = CustomTable('users')
+    return users_table.retrieve(**{'all':True})
 
 @users_bp.route('/retrieve_user/<string:user_id>',methods=['GET'])
 def retrieve_id(user_id):
-
-    record = retrieve('users',id_=user_id)
+    users_table = CustomTable('users')
+    record = users_table.retrieve(**{'id':user_id,'all':False})
     return record
 
 @users_bp.route('/update_user',methods=['POST'])
 def update_user():
-
+    users_table = CustomTable('users')
     payload = dict(request.json)
-    update_record = update('users',payload)
+    update_record = users_table.update(**payload)
     return update_record
 
 
 
 @users_bp.route('/delete_user/<string:user_id>',methods=['DELETE'])
 def delete_user(user_id):
-    
-    del_data = delete('users',user_id)
+    users_table = CustomTable('users')
+    del_data = users_table.delete(**{'id':user_id})
     return del_data
 
 

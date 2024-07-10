@@ -8,30 +8,35 @@ flower_data = {'1':{'flower_name':'Rose','flower_color':'Red'},
 unified_data = {'users':user_data,
                 'flowers':flower_data}
 
-def insert(table_name,payload):
+class CustomTable:
 
-    max_id = int(max(unified_data[table_name].keys()))
-    unified_data[table_name][f'{max_id+1}'] = payload
-    
-    return jsonify(payload)
+    def __init__(self,table_name) -> None:
+        self.table_name = table_name
 
-def retrieve(table_name,id_=None,all_=False):
-    if all_:
-        return unified_data[table_name]
-    return jsonify({id_:unified_data[table_name].get(id_,'Not Found!')})
+    def insert(self,**kwargs):
 
-def update(table_name,payload):
-    id_ = payload.pop('id_')
+        max_id = int(max(unified_data[self.table_name].keys()))
+        unified_data[self.table_name][f'{max_id+1}'] = kwargs
+        
+        return kwargs
 
-    if id_ in unified_data[table_name]:
-        unified_data[table_name].update({id_:payload})
-        return jsonify({id_:unified_data[table_name][id_]})
-    
-    return jsonify({id_:f'Not present in {table_name} table'})
+    def retrieve(self,**kwargs):
+        if kwargs['all']:
+            return unified_data[self.table_name]
+        return jsonify({kwargs['id']:unified_data[self.table_name].get(kwargs['id'],'Not Found!')})
 
-def delete(table_name,id_):
-    
-    del_data = unified_data[table_name].pop(id_,f'Not present in {table_name} table!')
-    return jsonify({id_:del_data})
+    def update(self,**kwargs):
+        id_ = kwargs.pop('id')
+
+        if id_ in unified_data[self.table_name]:
+            unified_data[self.table_name].update({id_:kwargs})
+            return {id_:unified_data[self.table_name][id_]}
+        
+        return {id_:f'Not present in {self.table_name} table'}
+
+    def delete(self,**kwargs):
+        
+        del_data = unified_data[self.table_name].pop(kwargs['id'],f'Not present in {self.table_name} table!')
+        return {kwargs['id']:del_data}
 
 
