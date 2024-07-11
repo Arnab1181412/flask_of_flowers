@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, Blueprint
 from data import CustomTable
 # CRUD API
 # pip freeze | grep package_name

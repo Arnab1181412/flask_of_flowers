@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
 
 user_data = {'1':{'name':'Arnab Samanta','profession':'Data Scientist','company':'NVIDIA'}}
 
@@ -23,7 +23,7 @@ class CustomTable:
     def retrieve(self,**kwargs):
         if kwargs['all']:
             return unified_data[self.table_name]
-        return jsonify({kwargs['id']:unified_data[self.table_name].get(kwargs['id'],'Not Found!')})
+        return {kwargs['id']:unified_data[self.table_name].get(kwargs['id'],'Not Found!')}
 
     def update(self,**kwargs):
         id_ = kwargs.pop('id')

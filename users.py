@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, Blueprint
 from data import CustomTable
 
 users_bp = Blueprint('users',__name__)
