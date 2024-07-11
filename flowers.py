@@ -1,5 +1,5 @@
 from flask import Flask, request, Blueprint
-from data import CustomTable
+from postgre_data import CustomTable
 # CRUD API
 # pip freeze | grep package_name
 
@@ -14,23 +14,30 @@ flower_bp = Blueprint('flowers',__name__)
 def insert_flower():
     flowers_table = CustomTable('flowers')
     payload = dict(request.json)
-    record = flowers_table.insert(**payload)
-    return record
+    insert_msg = flowers_table.insert(**payload)
+    return insert_msg
 
 # retirieval
 # you want all of the flowers in your inventory in two scenarios
 # 1. all flowers in the DB
 @flower_bp.route('/retrieve_all_flowers')
 def retrieve_all_flowers():
-    flowers_table = CustomTable('flowers')
-    return flowers_table.retrieve(**{'all':True})
+    flowers_table = CustomTable('flowers').retrieve(**{'all':True})
+    records = {}
+    for entry in flowers_table:
+        print(entry)
+        records[entry[0]] = {'flower_name':entry[1],'flower_color':entry[2]}
+    
+    return records
 
 # 2. flowers with yellow color
 @flower_bp.route('/retrieve_color_flowers/<string:flower_color>',methods=['GET'])
 def retrieve_color_flowers(flower_color):
-    flowers_table = CustomTable('flowers')
-    data = flowers_table.retrieve(**{'all':True})
-    retrieved_data = {flower_id:data[flower_id] for flower_id in data if data[flower_id].get('flower_color')==flower_color}
+    flowers_table = CustomTable('flowers').retrieve(**{'all':True})
+    records = {}
+    for entry in flowers_table:
+        records[entry[0]] = {'flower_name':entry[1],'flower_color':entry[2]}
+    retrieved_data = {flower_id:records[flower_id] for flower_id in records if records[flower_id].get('flower_color')==flower_color}
     return retrieved_data
 
 # update
@@ -40,15 +47,15 @@ def retrieve_color_flowers(flower_color):
 def modify_flowers():
     flowers_table = CustomTable('flowers')
     payload = dict(request.json)
-    update_record = flowers_table.update(**payload)
-    return update_record
+    update_msg = flowers_table.update(**payload)
+    return update_msg
 
 # deletion
 @flower_bp.route('/delete_flowers/<string:flower_id>',methods=['DELETE'])
 def delete_flowers(flower_id):
     flowers_table = CustomTable('flowers')
-    del_data = flowers_table.delete(**{'id':flower_id})
-    return del_data
+    del_msg = flowers_table.delete(**{'id':flower_id})
+    return del_msg
 # # 1. delete all red flowers
 # @app.route('/delete_color_flowers/<string:flower_color>',methods=['DELETE'])
 # def delete_color_flowers(flower_color):
