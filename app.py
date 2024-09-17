@@ -1,7 +1,12 @@
 from flask import Flask
 from flowers import flower_bp
 from users import users_bp
+from pymongo import MongoClient
+from dotenv import dotenv_values
+
+
 app = Flask(__name__)
+
 
 app.register_blueprint(flower_bp, url_prefix='/api')
 app.register_blueprint(users_bp, url_prefix='/api')
